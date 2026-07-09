@@ -1,0 +1,21 @@
+{
+    // A deliberately minimal container: Python + Jupyter and the editor
+    // extensions, but NONE of the science packages. Installing Galacticus and
+    // Dendros is part of the tutorial, so participants do that themselves.
+    "name": "Galacticus Tutorial",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+    "customizations": {
+        "vscode": {
+            // Auto-installed in the Codespace. See also .vscode/extensions.json
+            // (recommendations for people who open the repo in local VS Code).
+            "extensions": [
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "redhat.vscode-xml"
+            ]
+        }
+    },
+    // Nothing here installs Galacticus or Dendros on purpose. We only make sure
+    // pip/venv are ready so the very first tutorial command works cleanly.
+    "postCreateCommand": "python -m pip install --upgrade pip"
+}

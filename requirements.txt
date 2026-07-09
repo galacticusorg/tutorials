@@ -1,0 +1,14 @@
+# Python packages used in this tutorial.
+#
+# You will install these yourself during the tutorial (that is part of the
+# exercise!), but this file records exactly what is needed and pins major
+# versions for reproducibility. To install everything at once instead:
+#
+#     pip install -r requirements.txt
+#
+# See tutorial/01-setup-and-run.md for the step-by-step version.
+
+galacticus>=0.9,<1.0        # installs & runs the Galacticus model (downloads a prebuilt binary on first run)
+dendros[pandas,tabulate,plot]>=0.5,<1.0   # reads & analyses Galacticus HDF5 output
+plotly>=5.0                 # interactive 3D visualisation of the subhalo distribution
+jupyter>=1.0                # notebook interface (already present in the Codespace image)

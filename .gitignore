@@ -1,0 +1,20 @@
+# Galacticus model outputs (regenerable — participants create these live)
+*.hdf5
+# ...except the precomputed example fallback we ship on purpose:
+!tutorial/data/
+!tutorial/data/*.hdf5
+
+# Galacticus working/state files
+*.log
+core.*
+galacticusConfig.xml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS / editor cruft
+.DS_Store

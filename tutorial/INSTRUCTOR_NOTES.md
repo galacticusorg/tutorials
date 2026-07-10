@@ -68,13 +68,24 @@ upstream.)
 ## The Σ_sub calculation, in one paragraph
 
 Σ_sub is the amplitude of the projected subhalo mass function at a pivot mass of
-10⁸ M☉ (Gilman et al. 2020): d²N/(dA dm) = Σ_sub (m/m₀)^(−α) with m₀ = 10⁸ M☉.
+10⁸ M☉ (Gilman et al. 2020): d²N/(dA dm) = Σ_sub/m₀ (m/m₀)^(−α) with m₀ = 10⁸ M☉.
 In the notebook we project the 3D subhalo positions (`positionOrbital*`) onto a
-plane, select subhalos in a mass window around 10⁸ M☉, count them within a
-projected aperture around the host centre, and divide by (area × mass-bin
-width). Averaging over the `treeCount` realisations gives Σ_sub and its
-tree-to-tree scatter. This is a simplified, pedagogical version of the
-lensing-region measurement — good enough to get the number and the intuition.
+plane, select subhalos in a mass window around 10⁸ M☉ (using **infall mass**,
+`basicMass`, following Gilman et al. 2025), count them within a projected
+aperture around the host centre, and divide by (area × mass-bin width).
+Averaging over the `treeCount` realisations gives Σ_sub and its tree-to-tree
+scatter. This is a simplified, pedagogical version of the lensing-region
+measurement — good enough to get the number and the intuition.
+
+Talking points the notebook sets up:
+- **We get a few × 10⁻³ kpc⁻² (halo-averaged); Gilman et al. 2025 infer ~0.27
+  kpc⁻².** The gap is a feature, not a bug — lensing measures the dense central
+  region with different mass/area definitions and includes line-of-sight halos.
+  It's a natural hook for "how do we compare models to these constraints?"
+- **The surviving *infall*-mass function is shallower than ~1.9 (we fit ~1.7)**
+  and flattens below 10⁸ M☉ because tidal destruction preferentially removes
+  low-mass subhalos. Switching to *bound* mass (a suggested exercise) recovers a
+  clean ≈1.9 slope.
 
 ## Common gotchas
 

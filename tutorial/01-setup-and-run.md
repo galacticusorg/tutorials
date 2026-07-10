@@ -36,10 +36,10 @@ as *"not present"* — that's expected; it downloads on first run (Step 4).
 ## Step 2 — Install the analysis tools
 
 We'll analyse the output with **Dendros** and make an interactive 3D plot with
-**Plotly**. Install both now:
+**Plotly**. Install both now (`nbformat` lets Plotly render inside the notebook):
 
 ```bash
-pip install 'dendros[pandas,tabulate,plot]' plotly
+pip install 'dendros[pandas,tabulate,plot]' plotly nbformat
 ```
 
 (You can also install everything for this tutorial in one go with
@@ -66,10 +66,16 @@ Click on it in the file explorer on the left. A few things to notice:
   - Put your cursor inside the `<parameters>` element on a blank line and press
     `Ctrl+Space` — VS Code offers the valid parameter names.
   - Start typing a `value="..."` for something like `<darkMatterParticle>` and
-    it will suggest the allowed options.
-  - If you type an invalid element or value, it gets underlined. Try changing
-    `<darkMatterParticle value="CDM"/>` to `value="banana"` and watch the
-    squiggle appear — then change it back.
+    it will suggest the allowed options (CDM, WDMThermal, …).
+  - **Invalid *values* are flagged.** Change
+    `<darkMatterParticle value="CDM"/>` to `value="banana"` and a red squiggle
+    appears — `banana` isn't in the allowed set. Change it back.
+  - Note: the schema is deliberately *permissive about names* — it will happily
+    autocomplete element and attribute names, but it won't underline an
+    unrecognised name (Galacticus parameter files are too deeply and
+    context-dependently nested for name-level validation). The strict check is
+    `galacticus validate` (next), which the launcher also runs automatically
+    before every run.
 - **The physics of *this* model.** Read the comments. The parameters that make
   this the model we want are:
 

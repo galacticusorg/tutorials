@@ -1,6 +1,10 @@
 {
-  "//": "Associate Galacticus parameter files with the parameter XSD so the Red Hat XML extension (redhat.vscode-xml) gives real-time validation and autocompletion. The schema in .vscode/schema/parameters.xsd is a vendored snapshot of schema/parameters.xsd from the Galacticus repository (regenerate with tutorial/../scripts if it drifts). Open a file under tutorial/parameters/ and start typing an element name to see the schema at work.",
+  "//": "Associate Galacticus parameter files with the parameter XSD so the Red Hat XML extension (redhat.vscode-xml) gives real-time validation and autocompletion. Two patterns are needed: '**/parameters/*.xml' matches files directly inside a parameters/ folder (like ours), and '**/parameters/**/*.xml' matches files in sub-folders — the glob matcher does NOT treat a single '**' as optional, so one pattern won't cover both. The schema in .vscode/schema/parameters.xsd is a vendored snapshot of schema/parameters.xsd from the Galacticus repository.",
   "xml.fileAssociations": [
+    {
+      "pattern": "**/parameters/*.xml",
+      "systemId": "${workspaceFolder}/.vscode/schema/parameters.xsd"
+    },
     {
       "pattern": "**/parameters/**/*.xml",
       "systemId": "${workspaceFolder}/.vscode/schema/parameters.xsd"

@@ -91,6 +91,19 @@ zero-setup source-build environment, the Galacticus repository itself ships a
   quasar lenses* — <https://ui.adsabs.harvard.edu/abs/2020MNRAS.491.6077G>.
   Defines Σ<sub>sub</sub>, the projected subhalo number density normalisation at
   10<sup>8</sup> M<sub>☉</sub>, used as a lensing dark-matter probe.
+- Gilman et al. (2025) — <https://ui.adsabs.harvard.edu/abs/2025arXiv251107513G>.
+  More recent lensing constraints; defines Σ<sub>sub</sub> via the subhalo
+  **infall**-mass function (the definition Part 2 uses) and infers
+  Σ<sub>sub</sub> ≈ 0.27 kpc<sup>−2</sup>.
 - The subhalo orbital dynamics, tidal mass loss, and tidal heating in the model
   you run come from the `orbiting` satellite component; the relevant
   calibrations are cited inline in the parameter file.
+
+### For the Part 3 extensions
+
+- Bode, Ostriker & Turok (2001), *Halo formation in warm dark matter models* —
+  <https://ui.adsabs.harvard.edu/abs/2001ApJ...556...93B>. The WDM transfer
+  function (`bode2001`) used in `subhalos_1e13_z0.5_WDM.xml`.
+- Barkana, Haiman & Ostriker (2001) — WDM collapse barrier (`barkana2001WDM`).
+- Ludlow et al. (2016) — the concentration–mass–redshift relation used by the
+  `ludlow2016Analytic` model in `subhalos_1e13_z0.5_ludlow.xml`.

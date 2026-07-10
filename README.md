@@ -17,6 +17,9 @@ Everything runs in your browser in a GitHub Codespace. You will:
 3. **Analyse the output** in a Jupyter notebook with
    [Dendros](https://dendros.readthedocs.io/), compute Σ<sub>sub</sub>, and make
    an interactive **3D visualisation** of the orbiting subhalos.
+4. **Explore extensions** (optional): compare **cold vs. warm dark matter** —
+   the headline probe application, where WDM suppresses low-mass subhalos — and
+   test how sensitive Σ<sub>sub</sub> is to the halo concentration model.
 
 ---
 
@@ -37,11 +40,13 @@ Everything runs in your browser in a GitHub Codespace. You will:
 ```
 tutorial/
   01-setup-and-run.md          Step-by-step: install, inspect the parameter file, run the model
-  02-analysis.ipynb            Jupyter notebook: compute Σ_sub + interactive 3D subhalo plot
+  02-analysis.ipynb            Notebook: compute Σ_sub + interactive 3D subhalo plot
+  03-extensions.ipynb          Notebook: cold vs warm dark matter, and the concentration model
   parameters/
-    subhalos_1e13_z0.5.xml     The Galacticus parameter file you will run
-  data/
-    subhalos_1e13_z0.5.hdf5     Precomputed output — a fallback if your live run is slow
+    subhalos_1e13_z0.5.xml         The fiducial CDM model you run in Part 1
+    subhalos_1e13_z0.5_WDM.xml     Warm dark matter variant (Part 3)
+    subhalos_1e13_z0.5_ludlow.xml  Alternative concentration model (Part 3)
+  data/                        Precomputed outputs — fallbacks if a live run is slow
   INSTRUCTOR_NOTES.md          Notes for whoever is leading the session (timings, gotchas)
 docs/
   references.md                Where to find documentation, and how to do a full dev install

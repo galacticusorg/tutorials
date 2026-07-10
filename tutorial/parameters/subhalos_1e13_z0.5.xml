@@ -11,8 +11,11 @@
 <!--     count are fully resolved (verified complete).                      -->
 <!--   * treeCount = 16 independent realisations of the host, for Sigma_sub -->
 <!--     statistics (~5 min on a 2-core Codespace; tune to taste).          -->
-<!--   * collisionless-matter spherical-collapse solver + analytic growth   -->
-<!--     (appropriate for dark-matter-only; also keeps model setup fast).   -->
+<!--   * collisionless-matter spherical-collapse solver + analytic growth,  -->
+<!--     used in place of the canonical baryons+dark-energy structure-       -->
+<!--     formation physics to keep model setup fast for a live tutorial      -->
+<!--     (the baryonic/CAMB-growth machinery adds minutes of setup and is    -->
+<!--     unnecessary for a dark-matter-only model).                          -->
 <!--   * output-time-only analyses removed; we compute Sigma_sub ourselves  -->
 <!--     in the accompanying notebook.                                      -->
 <!-- ==================================================================== -->

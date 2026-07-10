@@ -50,20 +50,22 @@ it's done; anyone still waiting uses the shipped precomputed file.
 > (a fitting formula, no CAMB) — cuts the ~50 s cold-start to ~3 s at the cost of
 > a slightly less accurate power spectrum. Fine for this demo.
 
-## ⚠️ Why this file differs from the canonical `darkMatterOnlySubHalos.xml`
+## Why this file differs from the canonical `darkMatterOnlySubHalos.xml`
 
-The upstream canonical tutorial file (which uses the
+The upstream canonical file uses the full baryons + dark-energy structure-
+formation physics: `baryonsDarkMatter` linear growth (computed via CAMB) and the
 `sphericalCollapseBrynsDrkMttrDrkEnrgy` critical-overdensity / virial-density
-solver and `baryonsDarkMatter` linear growth) **crashes on the v0.9.7 pip
-binary** with `Fatal error: initial overdensity of perturbation should be small`
-(in `baryonsDarkMatterDarkEnergyPerturbationDynamicsSolver`). To make the
-tutorial run reliably on the pip release, this parameter file uses the
-collisionless-matter spherical-collapse solver
-(`sphericalCollapseClsnlssMttrCsmlgclCnstnt`) and analytic `collisionlessMatter`
-growth — both appropriate for a dark-matter-only model, and they also remove the
-several-minute CAMB growth computation. **If a newer pip release fixes the
-crash, this file can move back to the canonical solvers.** (Worth reporting
-upstream.)
+solver. **For a dark-matter-only tutorial that has to run live, that machinery is
+unnecessarily slow** — the CAMB-based growth computation alone adds several
+minutes to first-run model setup. So this file uses the collisionless-matter
+spherical-collapse solver (`sphericalCollapseClsnlssMttrCsmlgclCnstnt`) and
+analytic `collisionlessMatter` growth: physically appropriate for DMO, and it
+keeps setup near-instant. **That speed is the reason we use it.**
+
+(Aside: the canonical baryons+dark-energy solver also currently crashes on the
+v0.9.7 pip binary — `Fatal error: initial overdensity of perturbation should be
+small` — which Andrew is fixing separately. Even once that's fixed, we keep the
+fast collisionless setup here for the speed reason above.)
 
 ## The Σ_sub calculation, in one paragraph
 
@@ -102,24 +104,35 @@ Talking points the notebook sets up:
   the container's home cache, not the repo, so a fresh Codespace re-downloads on
   first run. That's fine — it's why we start the run early.
 
-## Extensions to offer if there's time / interest
+## Extensions — Part 3 (`03-extensions.ipynb`)
 
-- **CDM vs WDM.** Change `darkMatterParticle` to a warm-dark-matter model and
-  re-run: subhalos below the free-streaming mass are suppressed, lowering
-  Σ_sub — the exact effect Gilman et al. use to constrain WDM. Great payoff for
-  a "Dark Matter Probes" audience. (Note the transfer function / half-mode mass
-  parameters that need setting; test beforehand.)
-- **Host mass / redshift dependence.** Vary `massTree` or the base redshift and
-  see how Σ_sub responds.
-- **Radial distribution.** Plot subhalo number vs projected radius; connect to
-  where lensing perturbers are actually detectable.
+Two ready-to-run variant parameter files, compared in `03-extensions.ipynb`
+(which falls back to shipped precomputed outputs like Part 2):
+
+- **CDM vs WDM** (`subhalos_1e13_z0.5_WDM.xml`) — a 3 keV thermal relic
+  (bode2001 transfer + barkana2001WDM barrier + sharp-k window). **Measured:**
+  subhalos drop from ~71k (CDM) to ~24k (WDM), and Σ_sub at 10⁸ M☉ falls by
+  ~8× (WDM/CDM ≈ 0.13 within R_vir), converging to CDM at high mass — the exact
+  effect Gilman et al. use to constrain WDM. The headline dark-matter-probe
+  payoff; run it live if time allows (~30 s of evolution). Warmer particle
+  (lower `mass`) = deeper suppression.
+- **Concentration model** (`subhalos_1e13_z0.5_ludlow.xml`) — swaps the fiducial
+  layered scale-radius model for the analytic Ludlow 2016 c(M,z). **Measured:**
+  Σ_sub barely changes (0.0019 → 0.0020) — a robustness result worth stating
+  (not every ingredient matters as much as the DM particle).
+
+Other quick ideas to suggest verbally:
+- **Host mass / redshift dependence.** Vary `massTree` or the base redshift.
+- **Radial distribution.** Plot subhalo number vs projected radius.
+- **WDM mass scan.** Vary the WDM `mass` (2–10 keV) → this *is* the constraint curve.
 
 ## Files to double-check before each delivery
 
-- [ ] `tutorial/parameters/subhalos_1e13_z0.5.xml` still validates:
+- [ ] All three parameter files still validate, e.g.
       `galacticus validate tutorial/parameters/subhalos_1e13_z0.5.xml`
-- [ ] `tutorial/data/subhalos_1e13_z0.5.hdf5` (precomputed fallback) is present
-      and current.
+      (also `_WDM.xml` and `_ludlow.xml`).
+- [ ] Precomputed fallbacks present in `tutorial/data/` (fiducial, `_WDM`,
+      `_ludlow`) and current.
 - [ ] Timing number above is filled in from a real Codespace.
 - [ ] Vendored schema `.vscode/schema/parameters.xsd` isn't badly out of date
       vs the upstream Galacticus release you're demoing.

@@ -85,7 +85,7 @@ Click on it in the file explorer on the left. A few things to notice:
   | `mergerTreeConstructor → redshiftBase` | `0.5` | the host is defined at *z* = 0.5 |
   | `outputTimes → redshifts` | `0.5` | we output the subhalo population at *z* = 0.5 |
   | `mergerTreeMassResolution → massResolution` | `3.0e7` | below 10⁸, so the 10⁸ M☉ subhalos we count are fully resolved |
-  | `mergerTreeBuildMasses → treeCount` | `16` | independent realisations of the host, for Σ_sub statistics |
+  | `mergerTreeBuildMasses → treeCount` | `8` | independent realisations of the host, for Σ_sub statistics |
   | `componentSatellite value="orbiting"` | — | each subhalo gets a live position & orbit, with tidal stripping & heating |
 
   Everything else (cosmology, power spectrum, tidal-stripping calibration, …) is
@@ -104,13 +104,15 @@ Now run it. From the repository root:
 galacticus run tutorial/parameters/subhalos_1e13_z0.5.xml
 ```
 
-**The first run is the slow one:** Galacticus downloads its binary (~250 MB) and
-datasets (~6 GB) and computes a transfer function before it starts building
-trees. After that it builds and evolves each of the 16 merger trees, following
-every subhalo's orbit through the host. You'll see progress messages in the
-terminal. Expect **roughly 5 minutes** for the tree evolution on a 2-core
-Codespace (plus the one-time download); it's a good moment to talk through what
-the model is doing. Start it and let it run while you read on.
+**The first run is the slow one.** Before building any trees, Galacticus does a
+one-time download of its binary (~250 MB) and datasets (~6 GB) and computes a
+transfer function — this download is the bulk of the wait. After that it builds
+and evolves each of the 8 merger trees, following every subhalo's orbit through
+the host. All told, budget **~10–15 minutes** for this first run on the 4-core
+Codespace (the download dominates; later runs skip it and are much quicker). It's
+a good moment to talk through what the model is doing — **start it early** and let
+it run while you read on. If it's still going when you reach Part 2, the notebook
+falls back to a shipped precomputed copy automatically.
 
 When it finishes you'll have an output file:
 

@@ -22,33 +22,40 @@ shipped precomputed file (the notebook falls back automatically).
 
 ## Timings (measured; re-check on a real Codespace)
 
-Measured on a 20-core workstation with the committed parameter file
-(`massResolution = 3e7`, `treeCount = 16`, collisionless solver, CAMB transfer):
+Committed parameter files use `massResolution = 3e7`, `treeCount = 8`, the
+collisionless solver, and the CAMB transfer function.
 
-- `pip install galacticus`: a few seconds.
-- **First** `galacticus run` in a fresh environment pays three one-time costs:
-  1. downloading the prebuilt binary (~250 MB) and datasets (~6 GB) — **the
-     dominant cost on a Codespace**; budget a few minutes and mind the disk;
-  2. the CAMB transfer-function computation: **~50 s** (cached afterward);
-  3. tree evolution (below).
-- **Tree evolution scales per tree, not per core.** Galacticus parallelises
-  *across* trees, so each tree runs on one core (~36 s/tree at `3e7`), and a
-  2-core Codespace runs 2 trees at a time. 16 trees ⇒ ~8 batches ⇒ **≈ 5 min**
-  (some trees are slower; the slowest single tree we saw was ~110 s).
-- The analysis notebook runs in seconds.
+**Measured on a real Codespace** (`galacticus run …`, wall-clock):
+- **First CDM run, 2-core Codespace, including the download: ~27 min** — too slow.
+  This is dominated by the one-time download of the prebuilt binary (~250 MB) and
+  datasets (~6 GB) plus tree evolution; Codespace cores are much slower per-core
+  than a workstation. The WDM run (later, no download) took **~9 min** and the
+  concentration run **~22 min** at `treeCount = 16`.
+- **Mitigations we've applied:** `treeCount` reduced 16 → **8** (halves
+  evolution), and the devcontainer now requests a **4-core** machine
+  (`hostRequirements.cpus: 4`), which roughly halves evolution again. Expect the
+  first CDM run to land around **10–15 min** on 4 cores; the WDM and concentration
+  runs are shorter (fewer/faster subhalos, and no re-download).
+- The download itself is **not** sped up by cores or fewer trees — it's the
+  irreducible part of the first run. If you ever want to eliminate that wait,
+  enable a **Codespaces prebuild** that runs `galacticus install` (downloads the
+  binary + datasets into the image). That trades away the "install it live"
+  teaching moment, so we don't do it by default — but it's the lever if the
+  download becomes a problem on the day.
+- The analysis notebooks run in seconds.
 
 **Net: have participants `pip install` and kick off the run early** (during the
-parameter-file walk-through). By the time you reach the notebook (~10 min later)
-it's done; anyone still waiting uses the shipped precomputed file.
+parameter-file walk-through and while you talk through the physics), and use a
+4-core Codespace. Anyone still waiting uses the shipped precomputed files.
 
-> **Knobs to trade statistics vs. wall-clock** (both in the parameter file):
-> `massResolution` (finer = resolves lower-mass subhalos = many more objects;
-> must stay **below 1e8** so the 1e8 subhalos are complete — verified complete at
-> `3e7`) and `treeCount` (more realisations = smoother Σ_sub, linear in time).
-> To go faster: raise `massResolution` toward `1e8` or lower `treeCount`.
+> **Knobs to trade statistics vs. wall-clock** (in the parameter file):
+> `treeCount` (more realisations = smoother Σ_sub, linear in time — drop to 4–6
+> to go faster, raise for smoother statistics) and `massResolution` (finer =
+> resolves lower-mass subhalos = many more objects; must stay **below 1e8** so
+> the 1e8 subhalos are complete — `3e7` is verified complete; **note that even
+> `3e7` makes Σ_sub an underestimate**, see the resolution discussion in Part 2).
 > To go faster on *setup*: switch `transferFunction` to `eisensteinHu1999`
-> (a fitting formula, no CAMB) — cuts the ~50 s cold-start to ~3 s at the cost of
-> a slightly less accurate power spectrum. Fine for this demo.
+> (a fitting formula, no CAMB).
 
 ## Why this file differs from the canonical `darkMatterOnlySubHalos.xml`
 
@@ -111,15 +118,17 @@ Two ready-to-run variant parameter files, compared in `03-extensions.ipynb`
 
 - **CDM vs WDM** (`subhalos_1e13_z0.5_WDM.xml`) — a 3 keV thermal relic
   (bode2001 transfer + barkana2001WDM barrier + sharp-k window). **Measured:**
-  subhalos drop from ~71k (CDM) to ~24k (WDM), and Σ_sub at 10⁸ M☉ falls by
-  ~8× (WDM/CDM ≈ 0.13 within R_vir), converging to CDM at high mass — the exact
+  subhalos drop ~35k (CDM) → ~12k (WDM), and Σ_sub at 10⁸ M☉ falls by ~8×
+  (WDM/CDM ≈ 0.13 within R_vir), converging to CDM at high mass — the exact
   effect Gilman et al. use to constrain WDM. The headline dark-matter-probe
-  payoff; run it live if time allows (~30 s of evolution). Warmer particle
-  (lower `mass`) = deeper suppression.
-- **Concentration model** (`subhalos_1e13_z0.5_ludlow.xml`) — swaps the fiducial
-  layered scale-radius model for the analytic Ludlow 2016 c(M,z). **Measured:**
-  Σ_sub barely changes (0.0019 → 0.0020) — a robustness result worth stating
-  (not every ingredient matters as much as the DM particle).
+  payoff; run it live if time allows. Warmer particle (lower `mass`) = deeper
+  suppression.
+- **Concentration** (`subhalos_1e13_z0.5_ludlow.xml`) — analytic Ludlow 2016
+  c(M,z) with normalisation `C` lowered from ~650 to **300**. **Measured:** this
+  makes halos clearly less concentrated (median c near 1e8 drops ~11 → ~7.7),
+  yet Σ_sub barely moves (0.0019 vs 0.0019) — a strong robustness result: unlike
+  the DM particle, concentration hardly touches Σ_sub here. The concentration
+  plot shows the shift; the Σ_sub table shows the robustness.
 
 Other quick ideas to suggest verbally:
 - **Host mass / redshift dependence.** Vary `massTree` or the base redshift.

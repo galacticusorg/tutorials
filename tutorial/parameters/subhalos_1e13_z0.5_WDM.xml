@@ -160,7 +160,7 @@
   </mergerTreeBranchingProbability>
   <mergerTreeBuildMasses value="fixedMass">
     <massTree  value="1.0e13"/>
-    <treeCount value="16"    />
+    <treeCount value="8"     />
   </mergerTreeBuildMasses>
 
   <!-- Halo mass resolution -->

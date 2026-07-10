@@ -33,7 +33,9 @@ Everything runs in your browser in a GitHub Codespace. You will:
 
 > **Not in a Codespace yet?** From the GitHub page for this branch, click
 > **`< > Code` → Codespaces → Create codespace on kicp-2026-dark-matter-probes**.
-> Wait for VS Code to open in your browser, then come back to step 2.
+> Wait for VS Code to open in your browser, then come back to step 2. (This repo
+> requests a **4-core** machine so the model runs faster — the download on first
+> run is the main wait, so start the run early.)
 
 ## What's in this repository
 

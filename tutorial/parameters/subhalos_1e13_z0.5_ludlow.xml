@@ -4,11 +4,11 @@
 <!--                                                                    -->
 <!-- Same CDM 1e13 Msun host at z=0.5 as subhalos_1e13_z0.5.xml, but the halo -->
 <!-- scale-radius (concentration) model is swapped for the analytic Ludlow et -->
-<!-- al. (2016) c(M,z) relation, in place of the fiducial layered Johnson+2021 -->
-<!-- / Ludlow+2016 energy-random-walk model (both anchored to the same Diemer & -->
-<!-- Kravtsov 2014 base concentration). Use it to explore how sensitive the -->
-<!-- surviving subhalo population (and Sigma_sub) is to the concentration -->
-<!-- prescription.                                                      -->
+<!-- al. (2016) c(M,z) relation, with its normalisation C lowered from the ~650 -->
+<!-- default to 300 so that halos are noticeably LESS concentrated (median c -->
+<!-- near 1e8 drops from ~11 to ~7.7). Use it to explore how sensitive the -->
+<!-- surviving subhalo population (and Sigma_sub) is to concentration -->
+<!-- (answer: Sigma_sub is remarkably robust to it).                     -->
 <!-- ==================================================================== -->
 
 <parameters>
@@ -141,7 +141,7 @@
   </mergerTreeBranchingProbability>
   <mergerTreeBuildMasses value="fixedMass">
     <massTree  value="1.0e13"/>
-    <treeCount value="16"    />
+    <treeCount value="8"     />
   </mergerTreeBuildMasses>
 
   <!-- Halo mass resolution -->
@@ -165,6 +165,7 @@
          Johnson+2021 / Ludlow+2016 energy-random-walk scale-radius model. It needs a
          base concentration model, for which we reuse the fiducial Diemer & Kravtsov (2014). -->
     <darkMatterProfileScaleRadius value="ludlow2016Analytic">
+      <C value="300.0"/> <!-- reduced from the ~650 default to give visibly lower concentrations -->
       <darkMatterProfileScaleRadius value="concentration">
         <correctForConcentrationDefinition value="true"/>
         <darkMatterProfileConcentration value="diemerKravtsov2014">

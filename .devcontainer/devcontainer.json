@@ -4,6 +4,11 @@
     // Dendros is part of the tutorial, so participants do that themselves.
     "name": "Galacticus Tutorial",
     "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+    // Galacticus evolves merger trees one-per-core, so more cores = a faster live
+    // run. Default the Codespace to a 4-core machine (roughly halves the run vs 2).
+    "hostRequirements": {
+        "cpus": 4
+    },
     "customizations": {
         "vscode": {
             // Auto-installed in the Codespace. See also .vscode/extensions.json

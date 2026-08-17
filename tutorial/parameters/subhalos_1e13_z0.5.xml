@@ -16,6 +16,9 @@
 <!--     formation physics to keep model setup fast for a live tutorial      -->
 <!--     (the baryonic/CAMB-growth machinery adds minutes of setup and is    -->
 <!--     unnecessary for a dark-matter-only model).                          -->
+<!--   * Eisenstein & Hu (1999) fitting-function transfer function in place  -->
+<!--     of a CAMB (Boltzmann code) calculation - slightly less accurate,    -->
+<!--     but instant instead of minutes of setup.                            -->
 <!--   * output-time-only analyses removed; we compute Sigma_sub ourselves  -->
 <!--     in the accompanying notebook.                                      -->
 <!-- ==================================================================== -->
@@ -84,8 +87,12 @@
     <monotonicInterpolation            value="true"  />
     <powerSpectrumWindowFunction value="topHat"/>
   </cosmologicalMassVariance>
-  <transferFunction                   value="CAMB"     >
-    <redshift value="100.0"/>
+  <!-- The Eisenstein & Hu (1999) fitting function for the transfer function. This is less accurate than a Boltzmann-code
+       calculation (e.g. transferFunction value="CAMB"), but is evaluated instantly instead of taking minutes of setup - a good
+       trade for a tutorial, and far below the level of accuracy that matters for the subhalo statistics we compute here. -->
+  <transferFunction                   value="eisensteinHu1999">
+    <neutrinoNumberEffective value="3.046"/>
+    <neutrinoMassSummed      value="0.000"/>
   </transferFunction>
   <powerSpectrumPrimordial            value="powerLaw" >
     <index               value="0.9649"/> <!-- Planck 2018; https://ui.adsabs.harvard.edu/abs/2018arXiv180706211P -->

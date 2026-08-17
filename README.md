@@ -11,8 +11,9 @@ subhalos that appears in strong-lensing dark-matter constraints
 
 Everything runs in your browser in a GitHub Codespace. You will:
 
-1. **Install Galacticus** from PyPI (`pip install galacticus`) — a prebuilt
-   binary, no compiler needed.
+1. **Install Galacticus** from PyPI (`pip install galacticus==0.9.9`) — a
+   prebuilt binary, no compiler needed. (The version is pinned so the tutorial
+   stays reproducible.)
 2. **Run a dark-matter-only model** of a single host halo and its subhalos.
 3. **Analyse the output** in a Jupyter notebook with
    [Dendros](https://dendros.readthedocs.io/), compute Σ<sub>sub</sub>, and make

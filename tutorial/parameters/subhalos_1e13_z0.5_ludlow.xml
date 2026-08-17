@@ -6,7 +6,7 @@
 <!-- scale-radius (concentration) model is swapped for the analytic Ludlow et -->
 <!-- al. (2016) c(M,z) relation, with its normalisation C lowered from the ~650 -->
 <!-- default to 300 so that halos are noticeably LESS concentrated (median c -->
-<!-- near 1e8 drops from ~11 to ~7.7). Use it to explore how sensitive the -->
+<!-- near 1e8 drops from ~10.4 to ~7.3). Use it to explore how sensitive the -->
 <!-- surviving subhalo population (and Sigma_sub) is to concentration -->
 <!-- (answer: Sigma_sub is remarkably robust to it).                     -->
 <!-- ==================================================================== -->
@@ -75,8 +75,10 @@
     <monotonicInterpolation            value="true"  />
     <powerSpectrumWindowFunction value="topHat"/>
   </cosmologicalMassVariance>
-  <transferFunction                   value="CAMB"     >
-    <redshift value="100.0"/>
+  <!-- The Eisenstein & Hu (1999) fitting function for the transfer function - fast, and accurate enough for a tutorial. -->
+  <transferFunction                   value="eisensteinHu1999">
+    <neutrinoNumberEffective value="3.046"/>
+    <neutrinoMassSummed      value="0.000"/>
   </transferFunction>
   <powerSpectrumPrimordial            value="powerLaw" >
     <index               value="0.9649"/> <!-- Planck 2018; https://ui.adsabs.harvard.edu/abs/2018arXiv180706211P -->

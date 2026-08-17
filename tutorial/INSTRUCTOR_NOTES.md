@@ -9,7 +9,7 @@ participant-facing flow.
 | --- | --- | --- |
 | 0:00 | Motivation: subhalos as a dark matter probe; Σ_sub in lensing (Gilman+2020) | slides / talk |
 | 0:05 | Everyone opens a Codespace on `kicp-2026-dark-matter-probes` | GitHub |
-| 0:10 | `pip install galacticus`; look at `galacticus info` | `01-setup-and-run.md` §1 |
+| 0:10 | `pip install galacticus==0.9.9`; look at `galacticus info` | `01-setup-and-run.md` §1 |
 | 0:15 | Walk through the parameter file; demo schema autocompletion in VS Code | `01` §3 |
 | 0:22 | **Kick off the run** (`galacticus run …`) — it runs while you talk | `01` §4 |
 | 0:25 | While it runs: recap the physics (orbiting satellites, tidal stripping) | talk |
@@ -23,7 +23,7 @@ shipped precomputed file (the notebook falls back automatically).
 ## Timings (measured; re-check on a real Codespace)
 
 Committed parameter files use `massResolution = 3e7`, `treeCount = 8`, the
-collisionless solver, and the CAMB transfer function.
+collisionless solver, and the Eisenstein & Hu (1999) transfer function.
 
 **Measured on a real Codespace** (`galacticus run …`, wall-clock):
 - **First CDM run, 2-core Codespace, including the download: ~27 min** — too slow.
@@ -43,6 +43,11 @@ collisionless solver, and the CAMB transfer function.
   teaching moment, so we don't do it by default — but it's the lever if the
   download becomes a problem on the day.
 - The analysis notebooks run in seconds.
+- **Those Codespace timings were measured when the parameter files still used the
+  `CAMB` transfer function.** We have since switched to `eisensteinHu1999`, which
+  removes the CAMB setup entirely, so the numbers above are upper limits — first-run
+  wall-clock should now be a little shorter (the download still dominates). Worth
+  re-measuring on a Codespace before the session.
 
 **Net: have participants `pip install` and kick off the run early** (during the
 parameter-file walk-through and while you talk through the physics), and use a
@@ -54,8 +59,9 @@ parameter-file walk-through and while you talk through the physics), and use a
 > resolves lower-mass subhalos = many more objects; must stay **below 1e8** so
 > the 1e8 subhalos are complete — `3e7` is verified complete; **note that even
 > `3e7` makes Σ_sub an underestimate**, see the resolution discussion in Part 2).
-> To go faster on *setup*: switch `transferFunction` to `eisensteinHu1999`
-> (a fitting formula, no CAMB).
+> Setup is already near-instant: we use the `eisensteinHu1999` transfer function
+> (a fitting formula) rather than `CAMB`, which would add minutes of setup for
+> accuracy this tutorial does not need.
 
 ## Why this file differs from the canonical `darkMatterOnlySubHalos.xml`
 
@@ -118,15 +124,15 @@ Two ready-to-run variant parameter files, compared in `03-extensions.ipynb`
 
 - **CDM vs WDM** (`subhalos_1e13_z0.5_WDM.xml`) — a 3 keV thermal relic
   (bode2001 transfer + barkana2001WDM barrier + sharp-k window). **Measured:**
-  subhalos drop ~35k (CDM) → ~12k (WDM), and Σ_sub at 10⁸ M☉ falls by ~8×
+  subhalos drop ~39k (CDM) → ~12k (WDM), and Σ_sub at 10⁸ M☉ falls by ~8×
   (WDM/CDM ≈ 0.13 within R_vir), converging to CDM at high mass — the exact
   effect Gilman et al. use to constrain WDM. The headline dark-matter-probe
   payoff; run it live if time allows. Warmer particle (lower `mass`) = deeper
   suppression.
 - **Concentration** (`subhalos_1e13_z0.5_ludlow.xml`) — analytic Ludlow 2016
   c(M,z) with normalisation `C` lowered from ~650 to **300**. **Measured:** this
-  makes halos clearly less concentrated (median c near 1e8 drops ~11 → ~7.7),
-  yet Σ_sub barely moves (0.0019 vs 0.0019) — a strong robustness result: unlike
+  makes halos clearly less concentrated (median c near 1e8 drops ~10.4 → ~7.3),
+  yet Σ_sub barely moves (0.0021 vs 0.0020) — a strong robustness result: unlike
   the DM particle, concentration hardly touches Σ_sub here. The concentration
   plot shows the shift; the Σ_sub table shows the robustness.
 
@@ -144,4 +150,13 @@ Other quick ideas to suggest verbally:
       `_ludlow`) and current.
 - [ ] Timing number above is filled in from a real Codespace.
 - [ ] Vendored schema `.vscode/schema/parameters.xsd` isn't badly out of date
-      vs the upstream Galacticus release you're demoing.
+      vs the upstream Galacticus release you're demoing (it is a snapshot of
+      `schema/parameters.xsd` at the pinned tag, currently `v0.9.9`).
+- [ ] The **pinned Galacticus version is consistent everywhere**:
+      `requirements.txt`, `01-setup-and-run.md` (twice), `README.md`, and the
+      session-arc table above all say `galacticus==0.9.9`. We pin so that future
+      Galacticus releases cannot break the tutorial — the launcher version
+      selects the matching release of the executable *and* datasets. If you bump
+      the pin, re-run the three parameter files, refresh the precomputed files in
+      `tutorial/data/`, re-execute both notebooks, and re-check the measured
+      numbers quoted in these notes.

@@ -16,8 +16,13 @@ you *run* a model it fetches a prebuilt binary plus datasets for your platform
 (Linux, in the Codespace) — no compiler required.
 
 ```bash
-pip install galacticus
+pip install galacticus==0.9.9
 ```
+
+We pin the version deliberately: the launcher version selects the matching
+release of the Galacticus executable and datasets (here `v0.9.9`), so this
+tutorial gives the same answers no matter when you run it. For your own work,
+drop the `==0.9.9` to get the latest release.
 
 Check that the launcher is available and see where it will put things:
 
@@ -28,7 +33,7 @@ galacticus info
 You'll see the launcher version and the paths it manages. The executable shows
 as *"not present"* — that's expected; it downloads on first run (Step 4).
 
-> 💡 **What just happened?** `pip install galacticus` did *not* compile anything.
+> 💡 **What just happened?** `pip install galacticus==0.9.9` did *not* compile anything.
 > Galacticus is a large Fortran code, but the PyPI package ships a ready-to-run
 > binary. If you wanted to modify the source you'd do a full build instead — see
 > [`docs/references.md`](../docs/references.md).
@@ -105,10 +110,10 @@ galacticus run tutorial/parameters/subhalos_1e13_z0.5.xml
 ```
 
 **The first run is the slow one.** Before building any trees, Galacticus does a
-one-time download of its binary (~250 MB) and datasets (~6 GB) and computes a
-transfer function — this download is the bulk of the wait. After that it builds
-and evolves each of the 8 merger trees, following every subhalo's orbit through
-the host. All told, budget **~10–15 minutes** for this first run on the 4-core
+one-time download of its binary (~250 MB) and datasets (~6 GB) — this download
+is the bulk of the wait. After that it builds and evolves each of the 8 merger
+trees, following every subhalo's orbit through the host. All told, budget
+**~10–15 minutes** for this first run on the 4-core
 Codespace (the download dominates; later runs skip it and are much quicker). It's
 a good moment to talk through what the model is doing — **start it early** and let
 it run while you read on. If it's still going when you reach Part 2, the notebook
@@ -142,7 +147,7 @@ cells top to bottom to compute Σ<sub>sub</sub> and visualise the subhalos.
 ### Quick reference — the commands from this page
 
 ```bash
-pip install galacticus
+pip install galacticus==0.9.9
 pip install 'dendros[pandas,tabulate,plot]' plotly
 galacticus run tutorial/parameters/subhalos_1e13_z0.5.xml
 ```

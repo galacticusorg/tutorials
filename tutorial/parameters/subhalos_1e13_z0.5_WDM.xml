@@ -5,7 +5,7 @@
 <!-- Same 1e13 Msun host at z=0.5 as subhalos_1e13_z0.5.xml, but with a 3 keV -->
 <!-- thermal WDM particle. Changes vs the CDM file:                     -->
 <!--   * darkMatterParticle -> WDMThermal (mass 3.0 keV).               -->
-<!--   * transferFunction -> bode2001 WDM cut-off wrapping the CDM CAMB transfer. -->
+<!--   * transferFunction -> bode2001 WDM cut-off wrapping the CDM transfer.  -->
 <!--   * criticalOverdensity -> barkana2001WDM (WDM collapse barrier).  -->
 <!--   * sharp-k-space power-spectrum window (top-hat would create spurious -->
 <!--     halos below the WDM free-streaming cut-off).                   -->
@@ -88,9 +88,10 @@
     <eta              value="5.000"/>
     <nu               value="1.049"/>
     <!-- bode2001 modifies a CDM transfer function; feed it a CDM particle so it computes the CDM transfer, not WDM -->
-    <transferFunction value="CAMB">
-      <darkMatterParticle value="CDM"/>
-      <redshift           value="100.0"/>
+    <transferFunction value="eisensteinHu1999">
+      <darkMatterParticle      value="CDM"  />
+      <neutrinoNumberEffective value="3.046"/>
+      <neutrinoMassSummed      value="0.000"/>
     </transferFunction>
   </transferFunction>
   <powerSpectrumPrimordial            value="powerLaw" >

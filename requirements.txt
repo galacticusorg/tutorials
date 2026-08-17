@@ -8,7 +8,10 @@
 #
 # See tutorial/01-setup-and-run.md for the step-by-step version.
 
-galacticus>=0.9,<1.0        # installs & runs the Galacticus model (downloads a prebuilt binary on first run)
+# The Galacticus version is pinned so that future releases cannot break the
+# tutorial: the launcher version selects the matching release (v0.9.9) of the
+# executable and datasets.
+galacticus==0.9.9           # installs & runs the Galacticus model (downloads a prebuilt binary on first run)
 dendros[pandas,tabulate,plot]>=0.5,<1.0   # reads & analyses Galacticus HDF5 output
 plotly>=5.0                 # interactive 3D visualisation of the subhalo distribution
 nbformat>=4.2               # lets Plotly render figures inside the notebook

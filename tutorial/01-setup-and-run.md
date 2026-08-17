@@ -113,8 +113,8 @@ galacticus run tutorial/parameters/subhalos_1e13_z0.5.xml
 one-time download of its binary (~250 MB) and datasets (~6 GB) — this download
 is the bulk of the wait. After that it builds and evolves each of the 8 merger
 trees, following every subhalo's orbit through the host. All told, budget
-**~10–15 minutes** for this first run on the 4-core
-Codespace (the download dominates; later runs skip it and are much quicker). It's
+**~11 minutes** for this first run on the 4-core Codespace (the download
+dominates; later runs skip it and are much quicker). It's
 a good moment to talk through what the model is doing — **start it early** and let
 it run while you read on. If it's still going when you reach Part 2, the notebook
 falls back to a shipped precomputed copy automatically.

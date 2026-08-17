@@ -20,22 +20,28 @@ participant-facing flow.
 is ready by the time you get to the notebook. Anyone whose run is slow uses the
 shipped precomputed file (the notebook falls back automatically).
 
-## Timings (measured; re-check on a real Codespace)
+## Timings (measured on a Codespace)
 
 Committed parameter files use `massResolution = 3e7`, `treeCount = 8`, the
 collisionless solver, and the Eisenstein & Hu (1999) transfer function.
 
-**Measured on a real Codespace** (`galacticus run …`, wall-clock):
-- **First CDM run, 2-core Codespace, including the download: ~27 min** — too slow.
-  This is dominated by the one-time download of the prebuilt binary (~250 MB) and
-  datasets (~6 GB) plus tree evolution; Codespace cores are much slower per-core
-  than a workstation. The WDM run (later, no download) took **~9 min** and the
-  concentration run **~22 min** at `treeCount = 16`.
-- **Mitigations we've applied:** `treeCount` reduced 16 → **8** (halves
-  evolution), and the devcontainer now requests a **4-core** machine
-  (`hostRequirements.cpus: 4`), which roughly halves evolution again. Expect the
-  first CDM run to land around **10–15 min** on 4 cores; the WDM and concentration
-  runs are shorter (fewer/faster subhalos, and no re-download).
+**Measured on a 4-core Codespace** (`galacticus run …`, wall-clock, with
+`galacticus==0.9.9`):
+
+| Parameter file | Time |
+| --- | --- |
+| `subhalos_1e13_z0.5.xml` (fiducial CDM) | **~11 min**, *including* the one-time downloads |
+| `subhalos_1e13_z0.5_WDM.xml` | **~2 min** |
+| `subhalos_1e13_z0.5_ludlow.xml` | **~5–6 min** |
+
+- The fiducial number is dominated by the one-time download of the prebuilt
+  binary (~250 MB) and datasets (~6 GB); the two extension runs reuse that
+  download. WDM is the fastest because the free-streaming cut-off leaves far
+  fewer subhalos to evolve.
+- **How we got here:** `treeCount` was reduced 16 → **8** (halves evolution), the
+  devcontainer requests a **4-core** machine (`hostRequirements.cpus: 4`), and
+  the transfer function is the `eisensteinHu1999` fitting formula rather than
+  `CAMB` (removes minutes of model setup).
 - The download itself is **not** sped up by cores or fewer trees — it's the
   irreducible part of the first run. If you ever want to eliminate that wait,
   enable a **Codespaces prebuild** that runs `galacticus install` (downloads the
@@ -43,11 +49,6 @@ collisionless solver, and the Eisenstein & Hu (1999) transfer function.
   teaching moment, so we don't do it by default — but it's the lever if the
   download becomes a problem on the day.
 - The analysis notebooks run in seconds.
-- **Those Codespace timings were measured when the parameter files still used the
-  `CAMB` transfer function.** We have since switched to `eisensteinHu1999`, which
-  removes the CAMB setup entirely, so the numbers above are upper limits — first-run
-  wall-clock should now be a little shorter (the download still dominates). Worth
-  re-measuring on a Codespace before the session.
 
 **Net: have participants `pip install` and kick off the run early** (during the
 parameter-file walk-through and while you talk through the physics), and use a
@@ -148,7 +149,8 @@ Other quick ideas to suggest verbally:
       (also `_WDM.xml` and `_ludlow.xml`).
 - [ ] Precomputed fallbacks present in `tutorial/data/` (fiducial, `_WDM`,
       `_ludlow`) and current.
-- [ ] Timing number above is filled in from a real Codespace.
+- [ ] Timings above still hold — re-measure on a Codespace if you change the
+      pinned version, `treeCount`, `massResolution`, or the machine size.
 - [ ] Vendored schema `.vscode/schema/parameters.xsd` isn't badly out of date
       vs the upstream Galacticus release you're demoing (it is a snapshot of
       `schema/parameters.xsd` at the pinned tag, currently `v0.9.9`).

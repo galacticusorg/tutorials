@@ -25,35 +25,41 @@ shipped precomputed file (the notebook falls back automatically).
 Committed parameter files use `massResolution = 3e7`, `treeCount = 8`, the
 collisionless solver, and the Eisenstein & Hu (1999) transfer function.
 
-| Parameter file | Time on a 4-core Codespace |
+**Measured on a 4-core Codespace** (`galacticus run --no-tools …`, wall-clock,
+with `galacticus==0.9.11`):
+
+| Parameter file | Time |
 | --- | --- |
-| `subhalos_1e13_z0.5.xml` (fiducial CDM) | **~5 min**, *including* the one-time downloads — ⚠️ estimate, see below |
-| `subhalos_1e13_z0.5_WDM.xml` | **~2 min** |
-| `subhalos_1e13_z0.5_ludlow.xml` | **~5–6 min** |
+| `subhalos_1e13_z0.5.xml` (fiducial CDM) | **just under 7 min**, *including* the one-time downloads |
+| `subhalos_1e13_z0.5_WDM.xml` | **just over 2 min** |
+| `subhalos_1e13_z0.5_ludlow.xml` | **5.5 min** |
 
-> ⚠️ **The fiducial number is an estimate, not a measurement.** The `~11 min`
-> that was measured on a Codespace under `galacticus==0.9.9` was dominated by a
-> ~6 GB first-run download. Since we now pass **`--no-tools`** (§ below) that
-> download is ~2 GB, so most of that wait is gone — but the new figure has not
-> been re-measured on a Codespace. **Re-time it before the next delivery.** The
-> two extension numbers are the previous Codespace measurements; they never
-> included the download, and the model evolution itself is essentially unchanged
-> under `0.9.11`, so they should still hold.
+The fiducial run was ~11 min under `0.9.9`; `--no-tools` is what bought the
+difference. The two extension runs reuse the download, and are unchanged from
+the `0.9.9` measurements — the model evolution itself did not get faster.
 
-**Measured under `galacticus==0.9.11`** on a 20-core workstation, which is what
-the estimate above is scaled from:
+**First-run download, measured** (sizes are what crosses the network; the
+unpacked figures are what lands on the Codespace disk):
 
-| Quantity | Measured |
-| --- | --- |
-| First-run download, `--no-tools` | 276 MiB executable + 1.7 GiB datasets ≈ **2.0 GB** |
-| Tools archive (what `--no-tools` skips) | a further **~4 GB** |
-| `subhalos_1e13_z0.5.xml` evolution | 1.1 min wall / **7.9 min core-time** (8 trees, mean 60 s/tree) |
-| `subhalos_1e13_z0.5_WDM.xml` evolution | **3.7 min core-time** |
-| `subhalos_1e13_z0.5_ludlow.xml` evolution | **7.5 min core-time** |
+| Asset | Download | Unpacked |
+| --- | --- | --- |
+| `Galacticus.exe` | 290 MB | ~500 MB |
+| datasets | ~1.2 GB | ~1.7 GB |
+| parameter catalog | 2.4 MiB | — |
+| **total with `--no-tools`** | **~1.5 GB** | **~2.3 GB** |
+| `tools.tar.bz2` — *skipped* by `--no-tools` | 1.74 GB | ~4.1 GB |
+| total *without* `--no-tools` | ~3.2 GB | ~6.4 GB |
 
-- Core-time divided by the core count is only a rough guide to Codespace
-  wall-clock — Codespace cores are slower, and the old measurements do not scale
-  that way cleanly. That is why the fiducial row above is flagged.
+- Watch the units when quoting these: the `~6 GB` in the pre-`0.9.11` notes was
+  the **unpacked on-disk** total, not the download. `--no-tools` roughly halves
+  the bytes downloaded and cuts the disk footprint by about two thirds.
+- The datasets archive is served without a `Content-Length`, so the launcher
+  shows a running byte count (`1.2 GiB downloaded`) rather than a percentage
+  bar. That is normal, not a stall.
+- For reference, model evolution alone on a 20-core workstation: fiducial
+  **7.9 min core-time** (8 trees, mean 60 s/tree), WDM **3.7 min**, Ludlow
+  **7.5 min**. Core-time over core count is only a rough guide to Codespace
+  wall-clock — Codespace cores are slower — so prefer the measured table above.
 - **How we got here:** `treeCount` was reduced 16 → **8** (halves evolution), the
   devcontainer requests a **4-core** machine (`hostRequirements.cpus: 4`), the
   transfer function is the `eisensteinHu1999` fitting formula rather than `CAMB`
@@ -179,7 +185,9 @@ Talking points the notebook sets up:
   `RuntimeError: … incomplete or missing statusCompletion` traceback, they are
   on an **old copy of the notebooks** — have them pull.
 - **"It's stuck."** Almost always the first-run download. `galacticus info`
-  shows cache size growing. Reassure and continue.
+  shows cache size growing. Reassure and continue. Note the datasets archive
+  shows a running byte count rather than a percentage — it has no
+  `Content-Length` — so "1.2 GiB downloaded" with no bar is normal.
 - **Codespace rebuild wipes the binary.** The downloaded binary/datasets live in
   the container's home cache, not the repo, so a fresh Codespace re-downloads on
   first run. That's fine — it's why we start the run early.
@@ -217,12 +225,10 @@ Other quick ideas to suggest verbally:
       `_ludlow`) and current.
 - [ ] Timings above still hold — re-measure on a Codespace if you change the
       pinned version, `treeCount`, `massResolution`, or the machine size.
-      **The fiducial timing is currently an un-re-measured estimate** (see the
-      warning in the Timings section) — re-time it.
 - [ ] The Part 1 run command still carries **`--no-tools`** in
       `01-setup-and-run.md` (twice: Step 4 and the quick reference) and in the
-      session-arc table above. Dropping it silently adds ~4 GB to the first-run
-      download.
+      session-arc table above. Dropping it silently adds ~1.7 GB to the
+      first-run download (~4 GB on disk).
 - [ ] Both notebooks still fall back cleanly when the live output file is locked
       or unfinished (see "Notebook run while the model is still running" above).
 - [ ] Vendored schema `.vscode/schema/parameters.xsd` isn't badly out of date

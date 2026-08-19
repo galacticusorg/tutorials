@@ -113,16 +113,16 @@ galacticus run --no-tools tutorial/parameters/subhalos_1e13_z0.5.xml
 normally downloads an archive of *pre-built tools* — CAMB, CLASS, Cloudy and
 friends — which some models call out to. Ours doesn't need any of them (that is
 deliberate: our power spectrum uses the Eisenstein & Hu fitting formula, not
-CAMB), so `--no-tools` skips that archive and cuts the download from roughly
-6 GB to about 2 GB. The launcher **remembers the choice**, so later runs stay
-tool-free; if you ever build a model that does need them, add them with
-`galacticus install --tools`.
+CAMB), so `--no-tools` skips that archive: **1.7 GB less to download**, and
+about 4 GB less unpacked onto the Codespace disk. The launcher **remembers the
+choice**, so later runs stay tool-free; if you ever build a model that does need
+them, add them with `galacticus install --tools`.
 
 **The first run is the slow one.** Before building any trees, Galacticus does a
-one-time download of its binary (~280 MB) and datasets (~1.7 GB) — this download
+one-time download of its binary (~290 MB) and datasets (~1.2 GB) — this download
 is the bulk of the wait. After that it builds and evolves each of the 8 merger
 trees, following every subhalo's orbit through the host. All told, budget
-**~5 minutes** for this first run on the 4-core Codespace (the download
+**~7 minutes** for this first run on the 4-core Codespace (the download
 dominates; later runs skip it and are much quicker). It's
 a good moment to talk through what the model is doing — **start it early** and let
 it run while you read on. If it's still going when you reach Part 2, the notebook

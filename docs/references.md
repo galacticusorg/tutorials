@@ -14,7 +14,7 @@
 
 ### The `galacticus` command-line tool
 
-Once `pip install galacticus==0.9.9` is done (the tutorial pins the version; drop
+Once `pip install galacticus==0.9.11` is done (the tutorial pins the version; drop
 the pin for your own work), the `galacticus` launcher gives you:
 
 | Command | What it does |
@@ -23,6 +23,7 @@ the pin for your own work), the `galacticus` launcher gives you:
 | `galacticus validate <file.xml>` | Check a parameter file without running it |
 | `galacticus resolve <file.xml> -o <out.xml>` | Expand XInclude/change files into one standalone file |
 | `galacticus install` | Pre-download the binary, datasets & tools (otherwise done on first run) |
+| `galacticus install --no-tools` | …but skip the pre-built tools archive (CAMB, CLASS, Cloudy, …) — ~4 GB less to download. `run` takes the same flag, and the choice is remembered |
 | `galacticus update` | Re-download binaries for the installed version |
 | `galacticus info` | Show install location, environment variables, cache size |
 | `galacticus clean` | Remove regenerable cached data |

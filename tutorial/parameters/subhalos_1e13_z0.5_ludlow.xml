@@ -6,14 +6,21 @@
 <!-- scale-radius (concentration) model is swapped for the analytic Ludlow et -->
 <!-- al. (2016) c(M,z) relation, with its normalisation C lowered from the ~650 -->
 <!-- default to 300 so that halos are noticeably LESS concentrated (median c -->
-<!-- near 1e8 drops from ~10.4 to ~7.3). Use it to explore how sensitive the -->
+<!-- near 1e8 drops from ~10.4 to ~7.0). Use it to explore how sensitive the -->
 <!-- surviving subhalo population (and Sigma_sub) is to concentration -->
 <!-- (answer: Sigma_sub is remarkably robust to it).                     -->
 <!-- ==================================================================== -->
 
 <parameters>
   <formatVersion>2</formatVersion>
-  <lastModified revision="23263e8c1dfc569099e2c1fbdedbc04ed6446e59" time="2026-05-18T15:53:57"/>
+  <!-- Reviewed against Galacticus v0.9.11 (544daf1f). The parameters below are     -->
+  <!-- unchanged from the v0.9.9 version of this file, but the stamp is advanced   -->
+  <!-- DELIBERATELY: the migrations between the two releases exist to PIN the OLD  -->
+  <!-- behaviour (here: Vitvitska2002 subresolutionAngularMomentumMethod=          -->
+  <!-- "original"), and this tutorial wants the improved new defaults instead.     -->
+  <!-- Do NOT run parametersMigrate.py against                                     -->
+  <!-- an older stamp here - it would silently reinstate the old behaviour.        -->
+  <lastModified revision="544daf1fc5eafad397a6143d479501f1129ee2a3" time="2026-08-19T14:45:00"/>
 
 
   <verbosityLevel value="working"/>

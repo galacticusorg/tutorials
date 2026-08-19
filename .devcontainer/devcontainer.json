@@ -16,6 +16,12 @@
             "extensions": [
                 "ms-python.python",
                 "ms-toolsai.jupyter",
+                // Required for the Part 2 Plotly figure. The Jupyter extension
+                // used to pull this in for us; it no longer reliably does, and
+                // without it the 3D plot fails with "No renderer could be found
+                // for mimetype application/vnd.plotly.v1+json". List it
+                // explicitly rather than relying on the transitive install.
+                "ms-toolsai.jupyter-renderers",
                 "redhat.vscode-xml"
             ]
         }

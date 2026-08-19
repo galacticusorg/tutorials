@@ -184,6 +184,17 @@ Talking points the notebook sets up:
   so the session keeps moving. If someone reports a `BlockingIOError` or a
   `RuntimeError: … incomplete or missing statusCompletion` traceback, they are
   on an **old copy of the notebooks** — have them pull.
+- **The 3D Plotly plot doesn't render**, with *"No renderer could be found for
+  mimetype `application/vnd.plotly.v1+json`"*. The **Jupyter Notebook Renderers**
+  extension (`ms-toolsai.jupyter-renderers`) is missing. It used to come along
+  with `ms-toolsai.jupyter`; it no longer reliably does, so it is now listed
+  explicitly in `.devcontainer/devcontainer.json` and `.vscode/extensions.json`.
+  Part 2's plot cell also sets
+  `pio.renderers.default = "plotly_mimetype+notebook_connected"`, which emits an
+  HTML fallback (plotly.js from the CDN) alongside the mime type, so the plot
+  should draw even in a Codespace where the extension went missing. If it still
+  doesn't, have them install the extension from the Extensions panel and re-run
+  the cell.
 - **"It's stuck."** Almost always the first-run download. `galacticus info`
   shows cache size growing. Reassure and continue. Note the datasets archive
   shows a running byte count rather than a percentage — it has no
@@ -231,6 +242,9 @@ Other quick ideas to suggest verbally:
       first-run download (~4 GB on disk).
 - [ ] Both notebooks still fall back cleanly when the live output file is locked
       or unfinished (see "Notebook run while the model is still running" above).
+- [ ] The Part 2 3D Plotly figure actually renders in a fresh Codespace, and
+      `ms-toolsai.jupyter-renderers` is still listed in
+      `.devcontainer/devcontainer.json` and `.vscode/extensions.json`.
 - [ ] Vendored schema `.vscode/schema/parameters.xsd` isn't badly out of date
       vs the upstream Galacticus release you're demoing (it is a snapshot of
       `schema/parameters.xsd` at the pinned tag, currently `v0.9.11`).

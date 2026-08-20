@@ -10,7 +10,7 @@ participant-facing flow.
 | 0:00 | Motivation: subhalos as a dark matter probe; Σ_sub in lensing (Gilman+2020) | slides / talk |
 | 0:05 | Everyone opens a Codespace on `kicp-2026-dark-matter-probes` | GitHub |
 | 0:10 | `pip install galacticus==0.9.11`; look at `galacticus info` | `01-setup-and-run.md` §1 |
-| 0:15 | Walk through the parameter file; demo schema autocompletion in VS Code | `01` §3 |
+| 0:15 | Walk through the parameter file; demo schema autocompletion and `Ctrl+K Ctrl+G` docs jump | `01` §3 |
 | 0:22 | **Kick off the run** (`galacticus run --no-tools …`) — it runs while you talk | `01` §4 |
 | 0:25 | While it runs: recap the physics (orbiting satellites, tidal stripping) | talk |
 | 0:32 | Open the notebook; compute Σ_sub | `02-analysis.ipynb` |
@@ -195,6 +195,12 @@ Talking points the notebook sets up:
   should draw even in a Codespace where the extension went missing. If it still
   doesn't, have them install the extension from the Extensions panel and re-run
   the cell.
+- **`Ctrl+K Ctrl+G` does nothing in the parameter file.** It needs
+  `GalacticusOrg.galacticus-code` **v0.3.0 or later** — the command was
+  `.F90`-only before that, so an older build simply ignores the key in an XML
+  file. Check the installed version in the Extensions panel. The extension is
+  listed in `.devcontainer/devcontainer.json`, so a fresh Codespace gets
+  whatever the Marketplace currently serves.
 - **"It's stuck."** Almost always the first-run download. `galacticus info`
   shows cache size growing. Reassure and continue. Note the datasets archive
   shows a running byte count rather than a percentage — it has no
@@ -245,6 +251,11 @@ Other quick ideas to suggest verbally:
 - [ ] The Part 2 3D Plotly figure actually renders in a fresh Codespace, and
       `ms-toolsai.jupyter-renderers` is still listed in
       `.devcontainer/devcontainer.json` and `.vscode/extensions.json`.
+- [ ] `Ctrl+K Ctrl+G` on `<darkMatterProfileScaleRadius value="johnson2021">`
+      opens the docs in a fresh Codespace — i.e. the Marketplace is serving
+      `GalacticusOrg.galacticus-code` **>= 0.3.0**. If it is not, drop the
+      "Jump to the documentation" bullet from `01-setup-and-run.md` §3 before
+      the session rather than demoing something that does nothing.
 - [ ] Vendored schema `.vscode/schema/parameters.xsd` isn't badly out of date
       vs the upstream Galacticus release you're demoing (it is a snapshot of
       `schema/parameters.xsd` at the pinned tag, currently `v0.9.11`).

@@ -81,6 +81,17 @@ Click on it in the file explorer on the left. A few things to notice:
     context-dependently nested for name-level validation). The strict check is
     `galacticus validate` (next), which the launcher also runs automatically
     before every run.
+- **Jump to the documentation.** Most parameters here *select a piece of
+  physics*: the element is the family and the `value` is which implementation of
+  it to use. Put your cursor on one — say
+  `<darkMatterProfileScaleRadius value="johnson2021">` — and press
+  `Ctrl+K Ctrl+G` (`Cmd+K Cmd+G` on macOS). The Galacticus extension opens that
+  implementation's section of the [online
+  documentation](https://galacticus.readthedocs.io/). Anywhere inside the
+  element works, and if you land on something that isn't a selection — a
+  sub-parameter, or a comment — it takes you to the class that *contains* it,
+  which is where that sub-parameter is documented. It's the quickest way to find
+  out what any line in this file actually does.
 - **The physics of *this* model.** Read the comments. The parameters that make
   this the model we want are:
 

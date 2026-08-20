@@ -3,6 +3,7 @@
     "ms-python.python",
     "ms-toolsai.jupyter",
     "ms-toolsai.jupyter-renderers",
-    "redhat.vscode-xml"
+    "redhat.vscode-xml",
+    "GalacticusOrg.galacticus-code"
   ]
 }

@@ -22,7 +22,13 @@
                 // for mimetype application/vnd.plotly.v1+json". List it
                 // explicitly rather than relying on the transitive install.
                 "ms-toolsai.jupyter-renderers",
-                "redhat.vscode-xml"
+                "redhat.vscode-xml",
+                // Adds Ctrl+K Ctrl+G in the parameter file: opens the docs for
+                // the functionClass under the cursor (Part 1, Step 3). Needs
+                // v0.3.0 or later; before that the command was .F90-only. It
+                // pulls in the Fortran and RST extensions as dependencies,
+                // which this tutorial does not otherwise need.
+                "GalacticusOrg.galacticus-code"
             ]
         }
     },

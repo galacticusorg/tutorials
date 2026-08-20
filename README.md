@@ -11,7 +11,7 @@ subhalos that appears in strong-lensing dark-matter constraints
 
 Everything runs in your browser in a GitHub Codespace. You will:
 
-1. **Install Galacticus** from PyPI (`pip install galacticus==0.9.11`) — a
+1. **Install Galacticus** from PyPI (`pip install galacticus==0.9.12`) — a
    prebuilt binary, no compiler needed. (The version is pinned so the tutorial
    stays reproducible.)
 2. **Run a dark-matter-only model** of a single host halo and its subhalos.
@@ -35,8 +35,8 @@ Everything runs in your browser in a GitHub Codespace. You will:
 > **Not in a Codespace yet?** From the GitHub page for this branch, click
 > **`< > Code` → Codespaces → Create codespace on kicp-2026-dark-matter-probes**.
 > Wait for VS Code to open in your browser, then come back to step 2. (This repo
-> requests a **4-core** machine so the model runs faster — the download on first
-> run is the main wait, so start the run early.)
+> requests a **4-core** machine so the model runs faster — the model run is the
+> main wait at ~5 minutes, so start it early.)
 
 ## What's in this repository
 

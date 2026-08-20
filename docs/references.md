@@ -14,7 +14,7 @@
 
 ### The `galacticus` command-line tool
 
-Once `pip install galacticus==0.9.11` is done (the tutorial pins the version; drop
+Once `pip install galacticus==0.9.12` is done (the tutorial pins the version; drop
 the pin for your own work), the `galacticus` launcher gives you:
 
 | Command | What it does |

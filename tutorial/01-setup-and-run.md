@@ -16,13 +16,13 @@ you *run* a model it fetches a prebuilt binary plus datasets for your platform
 (Linux, in the Codespace) — no compiler required.
 
 ```bash
-pip install galacticus==0.9.11
+pip install galacticus==0.9.12
 ```
 
 We pin the version deliberately: the launcher version selects the matching
-release of the Galacticus executable and datasets (here `v0.9.11`), so this
+release of the Galacticus executable and datasets (here `v0.9.12`), so this
 tutorial gives the same answers no matter when you run it. For your own work,
-drop the `==0.9.11` to get the latest release.
+drop the `==0.9.12` to get the latest release.
 
 Check that the launcher is available and see where it will put things:
 
@@ -33,7 +33,7 @@ galacticus info
 You'll see the launcher version and the paths it manages. The executable shows
 as *"not present"* — that's expected; it downloads on first run (Step 4).
 
-> 💡 **What just happened?** `pip install galacticus==0.9.11` did *not* compile anything.
+> 💡 **What just happened?** `pip install galacticus==0.9.12` did *not* compile anything.
 > Galacticus is a large Fortran code, but the PyPI package ships a ready-to-run
 > binary. If you wanted to modify the source you'd do a full build instead — see
 > [`docs/references.md`](../docs/references.md).
@@ -124,20 +124,22 @@ galacticus run --no-tools tutorial/parameters/subhalos_1e13_z0.5.xml
 normally downloads an archive of *pre-built tools* — CAMB, CLASS, Cloudy and
 friends — which some models call out to. Ours doesn't need any of them (that is
 deliberate: our power spectrum uses the Eisenstein & Hu fitting formula, not
-CAMB), so `--no-tools` skips that archive: **1.7 GB less to download**, and
+CAMB), so `--no-tools` skips that archive: **1.8 GB less to download**, and
 about 4 GB less unpacked onto the Codespace disk. The launcher **remembers the
 choice**, so later runs stay tool-free; if you ever build a model that does need
 them, add them with `galacticus install --tools`.
 
-**The first run is the slow one.** Before building any trees, Galacticus does a
-one-time download of its binary (~290 MB) and datasets (~1.2 GB) — this download
-is the bulk of the wait. After that it builds and evolves each of the 8 merger
-trees, following every subhalo's orbit through the host. All told, budget
-**~7 minutes** for this first run on the 4-core Codespace (the download
-dominates; later runs skip it and are much quicker). It's
-a good moment to talk through what the model is doing — **start it early** and let
-it run while you read on. If it's still going when you reach Part 2, the notebook
-falls back to a shipped precomputed copy automatically.
+**The first run does a one-time download.** Before building any trees,
+Galacticus fetches its binary (~290 MB) and datasets (~190 MB). That takes about
+**23 seconds** on the Codespace — the launcher pulls the components in parallel
+and splits the large ones across several connections. Then it builds and evolves
+each of the 8 merger trees, following every subhalo's orbit through the host,
+which is the real work: about **5 minutes 15 seconds**. All told, budget **under
+6 minutes** for this first run on the 4-core Codespace; later runs skip the
+download and take just the model time. It's a good moment to talk through what
+the model is doing — **start it early** and let it run while you read on. If it's
+still going when you reach Part 2, the notebook falls back to a shipped
+precomputed copy automatically.
 
 When it finishes you'll have an output file:
 
@@ -167,7 +169,7 @@ cells top to bottom to compute Σ<sub>sub</sub> and visualise the subhalos.
 ### Quick reference — the commands from this page
 
 ```bash
-pip install galacticus==0.9.11
+pip install galacticus==0.9.12
 pip install 'dendros[pandas,tabulate,plot]' plotly
 galacticus run --no-tools tutorial/parameters/subhalos_1e13_z0.5.xml
 ```
